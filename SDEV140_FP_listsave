@@ -1,0 +1,55 @@
+"""
+Program: listsave.py
+Author: David N Drummond
+
+Calls customer class and uses it to create customer records and add them to a file.
+
+"""
+
+from SDEV140_FP_customer import Customer
+
+customerList = []
+
+file1 = open("customers.txt", 'a+') #creates or opens a customer file
+
+newRecord = True
+
+while newRecord is True:
+
+    customerList.append(Customer())
+
+    cont = input("Add another customer? y/n > ")
+    while cont.lower() not in ("y","n"):
+        cont = input("Add another customer? y/n > ")
+    if cont == "n":
+        break
+
+#  print(*customerList, "\n")
+
+#for i in range(len(customerList)):
+#    print(customerList[i])
+
+for i in range(len(customerList)):
+    file1.write(str(customerList[i]) + '\n')
+file1.close
+
+file1 = open("customers.txt", 'r')
+text = file1.read()
+textsplit = text.split()
+
+print(text)
+
+print(textsplit)
+
+#for count in range(randomCounter):
+#    number = random.randint(1, 500)
+#    f.write(str(number) + '\n')
+#f.close
+
+#f = open("integers.txt", 'r')
+#text = f.read()
+#textSplit = text.split()
+
+#print(text)
+
+#print(textSplit[0])
