@@ -87,7 +87,7 @@ class MowMorMainWindow(EasyFrame):
                                        columnspan = 4)
         self.addRecord = self.addButton(text = "Another record", 
                                        row = 1, column = 0,
-                                       columnspan = 2)
+                                       columnspan = 2, command = self.saveRecordAdd)
         self.listRecords = self.addButton(text = "Stop adding records",
                                        row = 1, column = 2,
                                        columnspan = 2,
@@ -128,6 +128,24 @@ class MowMorMainWindow(EasyFrame):
         self.dayPreference = self.addTextField("fri", row = 7,
                                        column = 3,
                                        sticky = "NSEW")
+
+    def saveRecordAdd(self):
+
+        first = self.firstName.getText
+        last = self.firstName.getText
+        streetNumber = self.streetNumber.getText
+        streetName = self.streetName.getText
+        city = self.city.getText
+        stateID = self.stateID.getText
+        zipCode = self.zipCode.getNumber
+        timePreference = self.timePreference.getNumber
+        weekdayPreference = self.dayPreference.getText
+        newSaveRecord = Customer(self, first, last, streetNumber, streetName, city, stateID, zipCode, timePreference, weekdayPreference)
+        addRecord(newSaveRecord)
+
+
+
+
 
     def stopAddingRecords(self):
 
