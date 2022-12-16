@@ -1,0 +1,18 @@
+"""
+Program: listsave.py
+Author: David N Drummond
+
+Retrieves and prints out customer information.
+"""
+
+import pickle
+
+customerList = []  # Creates a list to hold data from the Customer class
+
+
+def customerReport():  # defines a function that prints all records from the file
+    with open("customers.pickle", "rb") as f:
+        customerList = pickle.load(f)
+        for i in range(len(customerList)):
+            print(customerList[i])
+

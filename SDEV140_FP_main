@@ -1,0 +1,225 @@
+"""
+This module is the main module for the Mow-Mor app.
+It is set up to load functions and modules and run the entire program.
+"""
+
+import pickle  # Pickle is used to save and read records
+from SDEV140_FP_addRecord import addRecord  # This module contains the code used to add records
+from SDEV140_FP_listRecords import customerReport  # This module contains the code used to read records from the file into a list and print out the records.
+from SDEV140_FP_customer import Customer  # This module contains the class 'Customer' that defines the attributes necessary for each record.
+import tkinter
+
+from breezypythongui import EasyFrame
+
+
+class MowMorMainWindow(EasyFrame):
+    """Sets up the window,widgets, and data."""
+    
+    def __init__(self):
+        """Sets up the window, widgets, and data."""
+        EasyFrame.__init__(self, title = "Mow Mor Customer Management")
+
+        instruction = "Hello! What would you like to do?"
+        self.instructions = self.addLabel(text = instruction,
+                                       row = 0, column = 0,
+                                       columnspan = 4)
+        self.addRecord = self.addButton(text = "Add a record", 
+                                       row = 1, column = 0,
+                                       columnspan = 2, command = self.addNewRecord)
+        self.listRecords = self.addButton(text = "View records",
+                                       row = 1, column = 2,
+                                       columnspan = 2, command=self.listAllRecords)
+        self.firstName = self.addTextField("First Name", row = 3,
+                                       column = 0, sticky = "NSEW",
+                                       state="disabled")
+        self.lastName = self.addTextField("Last Name", row = 3,
+                                       column = 1, sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.streetNumber = self.addTextField("Street Number",
+                                       row = 4, column = 0,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.streetName = self.addTextField("Street Name",
+                                       row = 4, column = 1,
+                                       sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.city = self.addTextField("City", row = 5,
+                                       column = 0,
+                                       sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.stateID = self.addTextField("State", row = 5,
+                                       column = 2,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.zipCode = self.addIntegerField(12345, row = 5,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.timeLabel = self.addLabel("Time preference: 1-morning, 2-afternoon, 3-evening",
+                                       row = 6, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.timePreference = self.addIntegerField(2, row = 6,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.dayLabel = self.addLabel("Weekday preference: sun, mon, tue, wed, thu, fri, sat",
+                                       row = 7, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.dayPreference = self.addTextField("fri", row = 7,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+
+    def addNewRecord(self):
+
+        self.instructions.destroy()
+        self.addRecord.destroy()
+        self.listRecords.destroy()
+        
+        instruction = "Input customer data into correct fields."
+        self.instructions = self.addLabel(text = instruction,
+                                       row = 0, column = 0,
+                                       columnspan = 4)
+        self.addRecord = self.addButton(text = "Another record", 
+                                       row = 1, column = 0,
+                                       columnspan = 2)
+        self.listRecords = self.addButton(text = "Stop adding records",
+                                       row = 1, column = 2,
+                                       columnspan = 2,
+                                       command= self.stopAddingRecords)
+        self.firstName = self.addTextField("First Name", row = 3,
+                                       column = 0, sticky = "NSEW")
+        self.lastName = self.addTextField("Last Name", row = 3,
+                                       column = 1, sticky = "NSEW",
+                                       columnspan = 2,)
+        self.streetNumber = self.addTextField("Street Number",
+                                       row = 4, column = 0,
+                                       sticky = "NSEW")
+        self.streetName = self.addTextField("Street Name",
+                                       row = 4, column = 1,
+                                       sticky = "NSEW",
+                                       columnspan = 2)
+        self.city = self.addTextField("City", row = 5,
+                                       column = 0,
+                                       sticky = "NSEW",
+                                       columnspan = 2)
+        self.stateID = self.addTextField("State", row = 5,
+                                       column = 2,
+                                       sticky = "NSEW")
+        self.zipCode = self.addIntegerField(12345, row = 5,
+                                       column = 3,
+                                       sticky = "NSEW")
+        self.timeLabel = self.addLabel("Time preference: 1-morning, 2-afternoon, 3-evening",
+                                       row = 6, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.timePreference = self.addIntegerField(2, row = 6,
+                                       column = 3,
+                                       sticky = "NSEW")
+        self.dayLabel = self.addLabel("Weekday preference: sun, mon, tue, wed, thu, fri, sat",
+                                       row = 7, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.dayPreference = self.addTextField("fri", row = 7,
+                                       column = 3,
+                                       sticky = "NSEW")
+
+    def stopAddingRecords(self):
+
+        self.instructions.destroy()
+        self.addRecord.destroy()
+        self.listRecords.destroy()
+
+        instruction = "Hello! What would you like to do?"
+        self.instructions = self.addLabel(text = instruction,
+                                       row = 0, column = 0,
+                                       columnspan = 4)
+        self.addRecord = self.addButton(text = "Add a record", 
+                                       row = 1, column = 0,
+                                       columnspan = 2, command = self.addNewRecord)
+        self.listRecords = self.addButton(text = "View records",
+                                       row = 1, column = 2,
+                                       columnspan = 2)
+        self.firstName = self.addTextField("First Name", row = 3,
+                                       column = 0, sticky = "NSEW",
+                                       state="disabled")
+        self.lastName = self.addTextField("Last Name", row = 3,
+                                       column = 1, sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.streetNumber = self.addTextField("Street Number",
+                                       row = 4, column = 0,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.streetName = self.addTextField("Street Name",
+                                       row = 4, column = 1,
+                                       sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.city = self.addTextField("City", row = 5,
+                                       column = 0,
+                                       sticky = "NSEW",
+                                       columnspan = 2,
+                                       state="disabled")
+        self.stateID = self.addTextField("State", row = 5,
+                                       column = 2,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.zipCode = self.addIntegerField(12345, row = 5,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.timeLabel = self.addLabel("Time preference: 1-morning, 2-afternoon, 3-evening",
+                                       row = 6, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.timePreference = self.addIntegerField(2, row = 6,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+        self.dayLabel = self.addLabel("Weekday preference: sun, mon, tue, wed, thu, fri, sat",
+                                       row = 7, column = 0,
+                                       columnspan = 3,
+                                       sticky = "NSEW")
+        self.dayPreference = self.addTextField("fri", row = 7,
+                                       column = 3,
+                                       sticky = "NSEW",
+                                       state="disabled")
+
+    def listAllRecords(self):
+        self.instructions.destroy()
+        self.addRecord.destroy()
+        self.listRecords.destroy()
+        self.firstName.destroy()
+        self.lastName.destroy()
+        self.streetNumber.destroy()
+        self.streetName.destroy()
+        self.city.destroy()
+        self.stateID.destroy()
+        self.zipCode.destroy()
+        self.timeLabel.destroy()
+        self.timePreference.destroy()
+        self.dayLabel.destroy()
+        self.dayPreference.destroy()
+
+        self.customerRecords = self.addTextArea(customerReport(), row = 0, column = 0, width=100, height=100)
+
+        
+        
+
+def main():
+    """Instantiate and pop up the window."""
+    MowMorMainWindow().mainloop()
+
+
+if __name__ == "__main__":
+    try:
+        while True:
+            main()
+    except KeyboardInterrupt:
+        print("\nProgram closed.")
